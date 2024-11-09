@@ -2,11 +2,11 @@ import api from '../utils/api';
 
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-//import useFlashMessage from './useFlashMessage';
+import useFlashMessage from './useFlashMessage';
 
 export default function useAuth() {
     const [authenticated, setAuthenticated] = useState(false);
-    //const { setFlashMessage } = useFlashMessage();
+    const { setFlashMessage } = useFlashMessage();
     const navigate = useNavigate(); // Substitui o useHistory por useNavigate
 
     useEffect(() => {
@@ -28,11 +28,12 @@ export default function useAuth() {
             });
             await authUser(data);
         } catch (error) {
-            msgText = error.response.data.message;
+            msgText = JSON.parse(error.request.response).message;
             msgType = 'error';
         }
 
-        //setFlashMessage(msgText, msgType);
+        setFlashMessage(msgText, msgType);
+        return {msgType, msgText}
     }
 
     async function authUser(data) {

@@ -1,0 +1,77 @@
+.register{
+    height: 100vh;
+    background-color: rgb(255, 70, 70);
+    display: flex;
+    /* justify-content: center; */
+    /* align-items: center; */
+}
+
+.container{
+    display: flex;
+    margin: 0 auto 3rem;
+    flex-direction: column;
+    background-color: white;
+    min-width: 70%;
+    /* min-height: 70%; */
+    border-radius: 0 0 1rem 1rem;
+    box-shadow: 7px 10px 8px rgba(0, 0, 0, 0.186);
+    padding: 4rem 6rem;
+}
+
+.container > h1{
+    border-left: 5px solid rgb(255, 70, 70);
+    padding-left: .5rem;
+    margin-bottom: 2rem;
+}
+
+.formContainer{
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    width: 40%;
+}
+
+.formContainer .errorMessages{
+    margin-bottom: 1.5rem;
+}
+
+.formContainer img{
+    width: 120px;
+    margin: 0 auto;
+    margin-bottom: 1.5rem;
+}
+
+.formContainer form{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.formContainer form input[type="text"],
+.formContainer form input[type="password"]{
+    outline: none;
+    border: none;
+    border-bottom: 2px solid rgb(255, 70, 70);
+    padding: 1rem 0.5rem;
+    color: black;
+    font-weight: bold;
+}
+
+.formContainer form input[type="text"]::placeholder,
+.formContainer form input[type="password"]::placeholder{
+    font-weight: bold;
+    color: rgb(154, 154, 154);
+}
+
+.displayNone{
+    color: transparent;
+    font-weight: 650;
+    margin: 0 auto;
+}
+
+.error{
+    color: rgb(255, 70, 70);
+    font-weight: 650;
+    margin: 0 auto;
+}
+
