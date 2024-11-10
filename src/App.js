@@ -13,6 +13,7 @@ import { UserProvider } from './context/UserContext';
 import Register from './pages/Auth/Register';
 import Login from './pages/Auth/Login';
 import Chat from './pages/Chat/Chat';
+import NotFound from './pages/NotFound/NotFound';
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
           <Route path='/' element={<Chat />} />
           <Route path='/register' element={<Register />} />
           <Route path='/login' element={<Login />} />
+          <Route path='*' element={<NotFound />} />
         </Routes>
         </UserProvider>
       </BrowserRouter>

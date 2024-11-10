@@ -1,6 +1,6 @@
 import {useContext, useState} from 'react'
 import { Link } from "react-router-dom"
-import styles from "../../form/Auth.module.css"
+import styles from "./Auth.module.css"
 
 //contexts
 import {Context} from '../../context/UserContext'
@@ -8,9 +8,8 @@ import {Context} from '../../context/UserContext'
 const Register = () => {
 
     let resposta = false
-    const [response, setResponse] = useState("response")
+    const [response, setResponse] = useState(".")
 
-    const [user,setUser] = useState({})
     const {register} = useContext(Context)
 
     const [name, setName] = useState("");
@@ -38,8 +37,8 @@ const Register = () => {
             <h1>Registre-se</h1>
             <div className={styles.formContainer}>
                 <img src="logoFot.png" alt="Centro universitário IESB" />
-                {response !== 'response' && <p className={styles.error}>{response}</p>}
-                {response === 'response' && <p className={styles.displayNone}>{response}</p>}
+                {response !== '.' && <p className={styles.error}>{response}</p>}
+                {response === '.' && <p className={styles.displayNone}>{response}</p>}
                 <form onSubmit={handleSubmit}>
                     <input
                     type="text"

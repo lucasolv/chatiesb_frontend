@@ -1,0 +1,41 @@
+.notFound{
+    height: 100vh;
+    display: flex;
+}
+
+.content{
+    display: flex;
+    border-radius: 1rem;
+    margin: auto;
+    max-width: 70%;
+    min-height: 40%;
+    box-shadow: 7px 10px 8px rgba(0, 0, 0, 0.115);
+    border: 3px dashed rgb(235, 84, 84);
+}
+
+.div404{
+    font-weight: bold;
+    color: rgb(235, 84, 84);
+    min-width: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 5rem;
+}
+
+.content404{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding-right: 1rem;
+}
+
+.content404 > p a{
+    text-decoration: none;
+    font-weight: bold;
+    color: rgb(235, 84, 84);
+}
+
+.content404 h2{
+    margin-bottom: .3rem;
+}

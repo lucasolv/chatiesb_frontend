@@ -7,7 +7,7 @@ import useFlashMessage from './useFlashMessage';
 export default function useAuth() {
     const [authenticated, setAuthenticated] = useState(false);
     const { setFlashMessage } = useFlashMessage();
-    const navigate = useNavigate(); // Substitui o useHistory por useNavigate
+    const navigate = useNavigate();
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -52,10 +52,11 @@ export default function useAuth() {
             });
             await authUser(data);
         } catch (error) {
-            msgText = error.response.data.message;
+            msgText = JSON.parse(error.request.response).message;
             msgType = 'error';
         }
-        //setFlashMessage(msgText, msgType);
+        setFlashMessage(msgText, msgType);
+        return {msgType, msgText}
     }
 
     function logout() {
@@ -65,7 +66,7 @@ export default function useAuth() {
         setAuthenticated(false);
         localStorage.removeItem('token');
         api.defaults.headers.Authorization = undefined;
-        navigate('/'); 
+        navigate('/login'); 
 
         //setFlashMessage(msgText, msgType);
     }
