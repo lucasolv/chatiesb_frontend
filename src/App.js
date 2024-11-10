@@ -14,6 +14,7 @@ import Register from './pages/Auth/Register';
 import Login from './pages/Auth/Login';
 import Chat from './pages/Chat/Chat';
 import NotFound from './pages/NotFound/NotFound';
+import Chats from './pages/Chats/Chats';
 
 
 function App() {
@@ -23,7 +24,8 @@ function App() {
       <BrowserRouter>
         <UserProvider>
         <Routes>
-          <Route path='/' element={<Chat />} />
+          <Route path='/' element={<Chats />} />
+          <Route path='/chat/:threadId' element={<Chat />} />
           <Route path='/register' element={<Register />} />
           <Route path='/login' element={<Login />} />
           <Route path='*' element={<NotFound />} />
