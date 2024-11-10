@@ -1,8 +1,12 @@
 import React from 'react'
+import Navbar from '../../components/Navbar'
 
 const Chat = () => {
   return (
-    <div>Chat</div>
+    <div>
+      <h1>aqui</h1>
+      <Navbar />
+    </div>
   )
 }
 

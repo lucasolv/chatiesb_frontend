@@ -39,7 +39,7 @@ export default function useAuth() {
     async function authUser(data) {
         setAuthenticated(true);
         localStorage.setItem('token', JSON.stringify(data.token));
-        navigate('/'); // Substitui history.push por navigate
+        navigate('/');
     }
 
     async function login(user) {
@@ -65,7 +65,7 @@ export default function useAuth() {
         setAuthenticated(false);
         localStorage.removeItem('token');
         api.defaults.headers.Authorization = undefined;
-        navigate('/'); // Substitui history.push por navigate
+        navigate('/'); 
 
         //setFlashMessage(msgText, msgType);
     }

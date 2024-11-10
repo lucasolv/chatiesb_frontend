@@ -37,7 +37,7 @@ const Register = () => {
         <div className={styles.container}>
             <h1>Registre-se</h1>
             <div className={styles.formContainer}>
-                {/* <img src="logoFot.png" alt="Centro universitário IESB" /> */}
+                <img src="logoFot.png" alt="Centro universitário IESB" />
                 {response !== 'response' && <p className={styles.error}>{response}</p>}
                 {response === 'response' && <p className={styles.displayNone}>{response}</p>}
                 <form onSubmit={handleSubmit}>
@@ -67,6 +67,7 @@ const Register = () => {
                     />
                     <input type="submit" value="Cadastrar" />
                 </form>
+                <p>Já possui cadastro? <Link to='/login'>Clique aqui!</Link></p>
             </div>
         </div>
     </div>
