@@ -50,7 +50,7 @@ const Login = () => {
               />
               <input type="submit" value="Entrar" />
             </form>
-            <p>Ou <Link to='/login'>cadastre-se agora!</Link></p>
+            <p>Ou <Link to='/register'>cadastre-se agora!</Link></p>
           </div>
         </div>
     </div>

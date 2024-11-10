@@ -12,13 +12,16 @@ const Navbar = () => {
 
   return (
     <nav className={styles.navbar}>
-        <div>
-            IESB
+        <div className={styles.navbarContent}>
+          <div>
+              <img src="logo_iesb2.png" alt="Centro universitário IESB" />
+              <p>IESB</p>
+          </div>
+          <ul>
+              <li>Conversas</li>
+              {authenticated && <li onClick={logout}>Sair</li>}
+          </ul>
         </div>
-        <ul>
-            <li>Conversas</li>
-            <li onClick={logout}>Sair</li>
-        </ul>
     </nav>
   )
 }

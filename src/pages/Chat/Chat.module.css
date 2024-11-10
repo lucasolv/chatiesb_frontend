@@ -1,0 +1,53 @@
+.chat{  
+    padding-top: 2rem;
+    height: 85vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat > h2{
+    display: flex;
+    padding-left: 3rem;
+}
+
+.conversation{
+    margin: 0 auto;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 100%;
+    margin-top: 1rem;
+}
+
+.conversation > form{
+    width: 100%;
+    display: flex;
+    margin: 0 auto;
+}
+
+.conversation > form > input[type="text"]{
+    width: 90%;
+    display: flex;
+    margin: 0 auto;
+}
+
+.messagesContainer{
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 1rem;
+}
+
+.assistantMessages{
+    text-align: start;
+    padding-right: 10rem;
+}
+
+.userMessages{
+    text-align: end;
+    padding-left: 10rem;
+}
