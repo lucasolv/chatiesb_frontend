@@ -38,6 +38,7 @@ const Chat = () => {
     const data = await api.post(`ask/question`,{
         createNewThread: createNewThread,
         question: question,
+        chosenThread: threadId
     }, {
         headers: {
             'Authorization': `Bearer ${JSON.parse(token)}`
