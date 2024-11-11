@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import Navbar from '../../components/Navbar'
 import { useContext } from "react"
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import styles from './Chat.module.css'
 import { IoSend } from "react-icons/io5";
 import api from '../../utils/api';
@@ -14,18 +14,58 @@ const Chat = () => {
   const navigate = useNavigate();
   const {authenticated} = useContext(Context)
   const [question, setQuestion] = useState("")
+  const [createNewThread, setCreateNewThread] = useState(true)
+  const [loading, setLoading] = useState(false)
   const [messages, setMessages] = useState([])
+  const { threadId } = useParams();
+  const [mensagens, setMensagens] = useState(false)
+  const messagesEndRef = useRef(null);
 
   const [token] = useState(localStorage.getItem('token') || '')
 
-  const handleSubmit = (e)=>{
+  const handleSubmit = async (e)=>{
     e.preventDefault()
+    
+    setQuestion("")
+    setLoading(true)
+
+    if(messages.conversation.length > 0){
+      setCreateNewThread(false)
+    }
+    const data = await api.post(`ask/question`,{
+        createNewThread: createNewThread,
+        question: question,
+    }, {
+        headers: {
+            'Authorization': `Bearer ${JSON.parse(token)}`
+        }
+    }).then(async response => {
+      const data = await api.get(`ask/messages?threadId=${threadId}`, {
+          headers: {
+              'Authorization': `Bearer ${JSON.parse(token)}`
+          }
+      }).then(response => {
+          setMessages(response.data);
+        })
+      })
+      setMensagens(false)
+      setLoading(false)
   }
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    setTimeout(() => {
+      scrollToBottom()
+    }, 1000);
+  }, [mensagens]);
 
   useEffect(()=>{
     const fetchData = async ()=>{
       try {
-        const data = await api.get(`ask/messages?threadId=1`, {
+        const data = await api.get(`ask/messages?threadId=${threadId}`, {
           headers: {
               'Authorization': `Bearer ${JSON.parse(token)}`
           }
@@ -37,36 +77,33 @@ const Chat = () => {
       }
     }
     fetchData()
-  },[])
+  },[mensagens])
 
-  /* useEffect(()=>{
-    if(!authenticated){
+  useEffect(()=>{
+    /* if(!authenticated){
       navigate('/login')
-    }
-  },[]) */
+    } */
+      setMensagens(true)
+  },[])
 
   return (
     <div>
       <Navbar />
       <div className={styles.chat}>
-        <h2>Título da conversa</h2>
+        {messages && <h2>{messages.conversationTitle}</h2>}
         <div className={styles.conversation}>
           <ul className={styles.messagesContainer}>
-            <li className={styles.userMessages}><p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis eos culpa et delectus suscipit amet expedita doloremque distinctio itaque beatae veritatis quis possimus, ex repudiandae dicta non nisi quam natus?</p></li>
-            <li className={styles.assistantMessages}><p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis eos culpa et delectus suscipit amet expedita doloremque distinctio itaque beatae veritatis quis possimus, ex repudiandae dicta non nisi quam natus?</p></li>
-            <li className={styles.userMessages}><p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis eos culpa et delectus suscipit amet expedita doloremque distinctio itaque beatae veritatis quis possimus, ex repudiandae dicta non nisi quam natus?</p></li>
-            <li className={styles.assistantMessages}><p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis eos culpa et delectus suscipit amet expedita doloremque distinctio itaque beatae veritatis quis possimus, ex repudiandae dicta non nisi quam natus?</p></li>
-            <li className={styles.userMessages}><p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis eos culpa et delectus suscipit amet expedita doloremque distinctio itaque beatae veritatis quis possimus, ex repudiandae dicta non nisi quam natus?</p></li>
-            <li className={styles.assistantMessages}><p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis eos culpa et delectus suscipit amet expedita doloremque distinctio itaque beatae veritatis quis possimus, ex repudiandae dicta non nisi quam natus?</p></li>
-            <li className={styles.userMessages}><p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis eos culpa et delectus suscipit amet expedita doloremque distinctio itaque beatae veritatis quis possimus, ex repudiandae dicta non nisi quam natus?</p></li>
-            <li className={styles.assistantMessages}><p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis eos culpa et delectus suscipit amet expedita doloremque distinctio itaque beatae veritatis quis possimus, ex repudiandae dicta non nisi quam natus?</p></li>
-            <li className={styles.userMessages}><p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis eos culpa et delectus suscipit amet expedita doloremque distinctio itaque beatae veritatis quis possimus, ex repudiandae dicta non nisi quam natus?</p></li>
-            <li className={styles.assistantMessages}><p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis eos culpa et delectus suscipit amet expedita doloremque distinctio itaque beatae veritatis quis possimus, ex repudiandae dicta non nisi quam natus?</p></li>
+            {console.log(messages)}
+            {messages && messages.conversation && messages.conversation.slice().reverse().map((message, i)=>(
+              <li key={i} className={styles[`${message.role}Messages`]}><p>{message.content}</p></li>
+            ))}
+            <div ref={messagesEndRef} />
           </ul>
           <form onSubmit={handleSubmit}>
-            <input type="text" placeholder='Digite sua mensagem' />
-            <div className={styles.containerSubmit}>  
-              <button type="submit"><IoSend /></button>
+            <input type="text" placeholder='Digite sua mensagem' onChange={(e)=>setQuestion(e.target.value)} value={question || ""}/>
+            <div className={styles.containerSubmit}>
+              {!loading && <button type="submit"><IoSend /></button>}
+              {loading && <button type="submit" disabled><IoSend /></button>}
             </div>
           </form>
           <p>Chat IESB&copy; pode ceder respostas imprecisas. Verifique informações importantes.</p>

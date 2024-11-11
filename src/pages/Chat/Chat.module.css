@@ -84,9 +84,10 @@
 }
 
 .assistantMessages > p{
-    width: 80%;
+    width: 90%;
     padding: .8rem 1.2rem;
     border-radius: 1rem;
+    text-align: justify;
 }
 
 .userMessages{
@@ -99,4 +100,5 @@
     background-color: rgb(210, 210, 210);
     padding: .8rem 1.2rem;
     border-radius: 1rem;
+    text-align: justify;
 }
