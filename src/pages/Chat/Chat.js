@@ -93,14 +93,13 @@ const Chat = () => {
         {messages && <h2>{messages.conversationTitle}</h2>}
         <div className={styles.conversation}>
           <ul className={styles.messagesContainer}>
-            {console.log(messages)}
             {messages && messages.conversation && messages.conversation.slice().reverse().map((message, i)=>(
               <li key={i} className={styles[`${message.role}Messages`]}><p>{message.content}</p></li>
             ))}
             <div ref={messagesEndRef} />
           </ul>
           <form onSubmit={handleSubmit}>
-            <input type="text" placeholder='Digite sua mensagem' onChange={(e)=>setQuestion(e.target.value)} value={question || ""}/>
+            <input type="text" placeholder={loading ? 'Aguarde...' : 'Digite sua mensagem'} onChange={(e)=>setQuestion(e.target.value)} value={question || ""}/>
             <div className={styles.containerSubmit}>
               {!loading && <button type="submit"><IoSend /></button>}
               {loading && <button type="submit" disabled><IoSend /></button>}
