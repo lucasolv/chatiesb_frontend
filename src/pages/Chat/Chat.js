@@ -29,9 +29,12 @@ const Chat = () => {
     setQuestion("")
     setLoading(true)
 
-    if(messages.conversation.length > 0){
-      setCreateNewThread(false)
+    if(messages.conversation){
+      if(messages.conversation.length > 0){
+        setCreateNewThread(false)
+      }
     }
+    
     const data = await api.post(`ask/question`,{
         createNewThread: createNewThread,
         question: question,

@@ -1,6 +1,7 @@
 import React from 'react'
-import { useContext } from "react"
+import { useContext} from "react"
 import styles from './Navbar.module.css'
+import {Link} from 'react-router-dom'
 
 //context
 import { Context } from "../context/UserContext"
@@ -18,7 +19,7 @@ const Navbar = () => {
               <p>IESB</p>
           </div>
           <ul>
-              <li>Conversas</li>
+              <li><Link to='/'>Conversas</Link></li>
               {authenticated && <li onClick={logout}>Sair</li>}
           </ul>
         </div>
