@@ -20,23 +20,25 @@ const Chat = () => {
   const { threadId } = useParams();
   const [mensagens, setMensagens] = useState(false)
   const messagesEndRef = useRef(null);
+  let createNewThreadVar = true
+  let questionVar = ""
 
   const [token] = useState(localStorage.getItem('token') || '')
 
   const handleSubmit = async (e)=>{
     e.preventDefault()
     
-    setQuestion("")
     setLoading(true)
 
     if(messages.conversation){
       if(messages.conversation.length > 0){
-        setCreateNewThread(false)
+        createNewThreadVar = false
       }
     }
-    
+    questionVar = question
+    setQuestion("")
     const data = await api.post(`ask/question`,{
-        createNewThread: createNewThread,
+        createNewThread: createNewThreadVar,
         question: question,
         chosenThread: threadId
     }, {

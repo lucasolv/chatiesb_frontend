@@ -1,15 +1,25 @@
 import React, { useEffect, useState } from 'react'
 import Navbar from '../../components/Navbar'
-import { Link } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import api from '../../utils/api';
 import styles from './Chats.module.css'
+import { useContext } from "react"
+import { Context } from "../../context/UserContext"
 
 const Chats = () => {
 
+  const navigate = useNavigate();
+  const {authenticated} = useContext(Context)
   const [user, setUser] = useState({})
   const [error, setError] = useState("")
 
   const [token] = useState(localStorage.getItem('token') || '')
+
+  useEffect(()=>{
+    /* if(!authenticated){
+      navigate('/login')
+    } */
+  },[])
 
   useEffect(()=>{
     const fetchData = async () => {
@@ -32,11 +42,36 @@ const Chats = () => {
     <div>
         <Navbar />
         <div className={styles.chatsContainer}>
+          <h2>Conversas</h2>
           <ul>
-            {user.threadIds && user.threadIds.map((thread, i)=>(
-              <li key={i}><Link to={`/chat/${i+1}`}>{thread.threadTitle}</Link></li>
+            {user.threadIds && user.threadIds.slice().reverse().map((thread, i)=>(
+              <li key={i}><Link to={`/chat/${i+1}`}><button>{thread.threadTitle}</button></Link></li>
             ))}
+            <li><Link><button>titulo da conversa</button></Link></li>
+            <li><Link><button>titulo da conversa</button></Link></li>
+            <li><Link><button>titulo da conversa</button></Link></li>
+            <li><Link><button>titulo da conversa</button></Link></li>
+            <li><Link><button>titulo da conversa</button></Link></li>
+            <li><Link><button>titulo da conversa</button></Link></li>
+            <li><Link><button>titulo da conversa</button></Link></li>
+            <li><Link><button>titulo da conversa</button></Link></li>
+            <li><Link><button>titulo da conversa</button></Link></li>
+            <li><Link><button>titulo da conversa</button></Link></li>
+            <li><Link><button>titulo da conversa</button></Link></li>
+            <li><Link><button>titulo da conversa</button></Link></li>
+            <li><Link><button>titulo da conversa</button></Link></li>
+            <li><Link><button>titulo da conversa</button></Link></li>
+            <li><Link><button>titulo da conversa</button></Link></li>
+            <li><Link><button>titulo da conversa</button></Link></li>
+            <li><Link><button>titulo da conversa</button></Link></li>
+            <li><Link><button>titulo da conversa</button></Link></li>
+            <li><Link><button>titulo da conversa</button></Link></li>
+            <li><Link><button>titulo da conversa</button></Link></li>
+            <li><Link><button>titulo da conversa</button></Link></li>
           </ul>
+          <form >
+            <input type="text" name="" id="" />
+          </form>
         </div>
     </div>
   )

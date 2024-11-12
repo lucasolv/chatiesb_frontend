@@ -1,0 +1,53 @@
+.chatsContainer > ul{
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    max-width: 80%;
+    align-items: center;
+    justify-content: space-evenly;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    gap: 1.5rem;
+    overflow-y: auto;
+    height: 70vh;
+}
+
+.chatsContainer > h2{
+    margin: 2rem auto 1rem;
+    display: flex;
+    justify-content: center;
+}
+
+.chatsContainer > ul > li{
+    width: 30%;
+    display: flex;
+    justify-content: center;
+}
+
+.chatsContainer > ul > li > a{
+    text-decoration: none;
+}
+
+.chatsContainer > ul > li > a > button{
+    padding: 2rem 2rem;
+    border: 1px solid rgb(229, 229, 229);
+    background-color: rgb(240, 240, 240);
+    border-radius: 1rem;
+    transition: .2s;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    height: 8rem;
+    width: 25rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.chatsContainer > ul > li > a > button:hover{
+    box-shadow: 3px 5px 5px rgba(0, 0, 0, 0.101);
+    transform: scale(1.1);
+    font-weight: 650;
+    background-color: rgb(229, 229, 229);
+}
