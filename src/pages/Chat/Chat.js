@@ -37,23 +37,27 @@ const Chat = () => {
     }
     questionVar = question
     setQuestion("")
-    const data = await api.post(`ask/question`,{
-        createNewThread: createNewThreadVar,
-        question: question,
-        chosenThread: threadId
-    }, {
-        headers: {
-            'Authorization': `Bearer ${JSON.parse(token)}`
-        }
-    }).then(async response => {
-      const data = await api.get(`ask/messages?threadId=${threadId}`, {
+      try {
+        const data = await api.post(`ask/question`,{
+          createNewThread: createNewThreadVar,
+          question: question,
+          chosenThread: threadId
+      }, {
           headers: {
               'Authorization': `Bearer ${JSON.parse(token)}`
           }
-      }).then(response => {
-          setMessages(response.data);
+      }).then(async response => {
+        const data = await api.get(`ask/messages?threadId=${threadId}`, {
+            headers: {
+                'Authorization': `Bearer ${JSON.parse(token)}`
+            }
+        }).then(response => {
+            setMessages(response.data);
+          })
         })
-      })
+      } catch (error) {
+        console.log(error.message)
+      }
       setMensagens(false)
       setLoading(false)
   }
