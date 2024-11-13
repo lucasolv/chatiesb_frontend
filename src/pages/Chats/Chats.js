@@ -62,9 +62,9 @@ const Chats = () => {
   const [token] = useState(localStorage.getItem('token') || '')
 
   useEffect(()=>{
-    /* if(!authenticated){
+    if(!authenticated){
       navigate('/login')
-    } */
+    }
   },[])
 
   useEffect(()=>{
@@ -91,7 +91,7 @@ const Chats = () => {
           <h2>Conversas</h2>
           <ul className={styles[`${ulClass}`]}>
             <li><Link><button onClick={openForm}><MdOutlineAddCircle className={styles.addChat} /></button></Link></li>
-            {user.threadIds && user.threadIds.slice().reverse().map((thread, i)=>(
+            {user.threadIds && user.threadIds.map((thread, i)=>(
               <li key={i}><Link to={`/chat/${i+1}`}><button>{thread.threadTitle}</button></Link></li>
             ))}
           </ul>

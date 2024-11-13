@@ -17,7 +17,7 @@ const Navbar = () => {
         <div className={styles.navbarContent}>
           <div>
               <img src={logoIesb} alt="Centro universitário IESB" />
-              <p>IESB</p>
+              <p>Chat IESB</p>
           </div>
           <ul>
               <li><Link to='/'>Conversas</Link></li>

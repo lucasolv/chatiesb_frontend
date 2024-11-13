@@ -90,9 +90,9 @@ const Chat = () => {
   },[mensagens])
 
   useEffect(()=>{
-    /* if(!authenticated){
+    if(!authenticated){
       navigate('/login')
-    } */
+    }
       setMensagens(true)
   },[])
 
@@ -115,7 +115,7 @@ const Chat = () => {
               {loading && <button type="submit" disabled><IoSend /></button>}
             </div>
           </form>
-          <p>Chat IESB&copy; pode ceder respostas imprecisas. Verifique informações importantes.</p>
+          <p>Chat IESB pode ceder respostas imprecisas. Verifique informações importantes.</p>
         </div>
       </div>
     </div>

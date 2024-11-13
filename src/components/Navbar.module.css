@@ -25,6 +25,7 @@
     align-items: center;
     transform: scale(1.8);
     font-weight: bold;
+    margin-left: .8rem;
 }
 
 .navbarContent > ul{
