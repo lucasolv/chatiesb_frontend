@@ -1,29 +1,27 @@
-import React, { useEffect, useState, useRef } from 'react'
-import Navbar from '../../components/Navbar'
-import { useContext } from "react"
-import { useNavigate, useParams } from 'react-router-dom';
-import styles from './Chat.module.css'
+import React, { useEffect, useState, useRef } from "react";
+import Navbar from "../../components/Navbar";
+import { useContext } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import styles from "./Chat.module.css";
 import { IoSend } from "react-icons/io5";
-import api from '../../utils/api';
+import api from "../../utils/api";
 
-//context
-import { Context } from "../../context/UserContext"
+// Context
+import { Context } from "../../context/UserContext";
 
 const Chat = () => {
-
   const navigate = useNavigate();
-  const {authenticated} = useContext(Context)
-  const [question, setQuestion] = useState("")
-  const [createNewThread, setCreateNewThread] = useState(true)
-  const [loading, setLoading] = useState(false)
-  const [messages, setMessages] = useState([])
+  const { authenticated } = useContext(Context);
+  const [question, setQuestion] = useState("");
+  const [createNewThread, setCreateNewThread] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [messages, setMessages] = useState([]);
   const { threadId } = useParams();
   const [mensagens, setMensagens] = useState(false)
   const messagesEndRef = useRef(null);
   let createNewThreadVar = true
   let questionVar = ""
-
-  const [token] = useState(localStorage.getItem('token') || '')
+  const [token] = useState(localStorage.getItem("token") || "");
 
   const handleSubmit = async (e)=>{
     e.preventDefault()
@@ -66,12 +64,6 @@ const Chat = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  useEffect(() => {
-    setTimeout(() => {
-      scrollToBottom()
-    }, 1000);
-  }, [mensagens]);
-
   useEffect(()=>{
     const fetchData = async ()=>{
       try {
@@ -89,37 +81,51 @@ const Chat = () => {
     fetchData()
   },[mensagens])
 
+  useEffect(() => {
+    setTimeout(() => {
+      scrollToBottom()
+    }, 1000);
+  }, [mensagens]);
+
   useEffect(()=>{
-    if(!authenticated){
+    /* if(!authenticated){
       navigate('/login')
-    }
+    } */
       setMensagens(true)
   },[])
 
   return (
-    <div>
+    <div className={styles.chatPage}>
       <Navbar />
       <div className={styles.chat}>
         {messages && <h2>{messages.conversationTitle}</h2>}
         <div className={styles.conversation}>
           <ul className={styles.messagesContainer}>
-            {messages && messages.conversation && messages.conversation.slice().reverse().map((message, i)=>(
-              <li key={i} className={styles[`${message.role}Messages`]}><p>{message.content}</p></li>
+            {messages?.conversation?.slice().reverse().map((message, i) => (
+              <li
+                key={i}
+                className={styles[`${message.role}Messages`]}
+              >
+                <p>{message.content}</p>
+              </li>
             ))}
             <div ref={messagesEndRef} />
           </ul>
           <form onSubmit={handleSubmit}>
-            <input type="text" placeholder={loading ? 'Aguarde...' : 'Digite sua mensagem'} onChange={(e)=>setQuestion(e.target.value)} value={question || ""}/>
+          <input type="text" placeholder={loading ? 'Aguarde...' : 'Digite sua mensagem'} onChange={(e)=>setQuestion(e.target.value)} value={question || ""}/>
             <div className={styles.containerSubmit}>
               {!loading && <button type="submit"><IoSend /></button>}
               {loading && <button type="submit" disabled><IoSend /></button>}
             </div>
           </form>
-          <p>Chat IESB pode ceder respostas imprecisas. Verifique informações importantes.</p>
+          <p>
+            Chat IESB pode ceder respostas imprecisas. Verifique informações
+            importantes.
+          </p>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Chat
+export default Chat;

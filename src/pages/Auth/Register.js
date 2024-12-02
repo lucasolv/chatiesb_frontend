@@ -19,12 +19,33 @@ const Register = () => {
 
     async function handleSubmit(e){
         e.preventDefault()
+        if(!name){
+            setResponse('O nome é obrigatório!')
+            return
+        }
+        if(!registration){
+            setResponse('A matrícula é obrigatória!')
+            return
+        }
+        if(!password){
+            setResponse('A senha é obrigatória!')
+            return
+        }
+        if(!confirmPassword){
+            setResponse('A confirmação de senha é obrigatória!')
+            return
+        }
+        if(password !== confirmPassword){
+            setResponse('A senha e a confirmação de senha precisam ser iguais!')
+            return
+        }
         const newUser = {
             name,
             registration,
             password,
             confirmPassword
         }
+        setResponse('Carregando...')
         resposta = await register(newUser)
         if(resposta.msgType === 'error'){
             setResponse(resposta.msgText)

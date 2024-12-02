@@ -1,52 +1,52 @@
-.navbar{
+.navbar {
     background-color: rgb(255, 70, 70);
     color: white;
     padding: 1rem 0;
 }
 
-.navbarContent{
+.navbarContent {
     display: flex;
     justify-content: space-between;
     max-width: 70%;
     margin: 0 auto;
 }
 
-.navbarContent > div{
+.navbarContent > div {
     display: flex;
     gap: 2rem;
 }
 
-.navbarContent > div > img{
+.navbarContent > div > img {
     width: 50px;
 }
 
-.navbarContent > div > p{
+.navbarContent > div > p {
     display: flex;
     align-items: center;
     transform: scale(1.8);
     font-weight: bold;
-    margin-left: .8rem;
+    margin-left: 0.8rem;
 }
 
-.navbarContent > ul{
+.navbarContent > ul {
     list-style: none;
     display: flex;
     gap: 2rem;
     align-items: center;
 }
 
-.navbarContent > ul > li{
+.navbarContent > ul > li {
     cursor: pointer;
     font-size: 1.2rem;
-    transition: .2s;
+    transition: 0.2s;
 }
 
-.navbarContent > ul > li:hover{
+.navbarContent > ul > li:hover {
     transform: scale(1.05);
     font-weight: bold;
 }
 
-.navbarContent > ul > li > a{
+.navbarContent > ul > li > a {
     text-decoration: none;
     color: white;
 }

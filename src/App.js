@@ -25,7 +25,7 @@ function App() {
         <UserProvider>
         <Routes>
           <Route path='/' element={<Chats />} />
-          <Route path='/chat/:threadId' element={<Chat />} />
+          <Route path='/chat/:registration/:threadId' element={<Chat />} />
           <Route path='/register' element={<Register />} />
           <Route path='/login' element={<Login />} />
           <Route path='*' element={<NotFound />} />

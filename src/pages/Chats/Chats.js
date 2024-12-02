@@ -62,9 +62,9 @@ const Chats = () => {
   const [token] = useState(localStorage.getItem('token') || '')
 
   useEffect(()=>{
-    if(!authenticated){
+    /* if(!authenticated){
       navigate('/login')
-    }
+    } */
   },[])
 
   useEffect(()=>{
@@ -84,16 +84,21 @@ const Chats = () => {
     fetchData()
   },[])
 
+  if(Object.keys(user).length === 0){
+    return <p>Carregando...</p>
+  }
+
   return (
     <div>
         <Navbar />
         <div className={styles.chatsContainer}>
           <h2>Conversas</h2>
           <ul className={styles[`${ulClass}`]}>
-            <li><Link><button onClick={openForm}><MdOutlineAddCircle className={styles.addChat} /></button></Link></li>
+            <li className={styles.addButton}><Link><button onClick={openForm}><MdOutlineAddCircle className={styles.addChat} /></button></Link></li>
             {user.threadIds && user.threadIds.map((thread, i)=>(
-              <li key={i}><Link to={`/chat/${i+1}`}><button>{thread.threadTitle}</button></Link></li>
+              <li className={styles.chatButton} key={i}><Link to={`/chat/${user.registration}/${i+1}`}><button>{thread.threadTitle}</button></Link> <button className={styles.deleteButton}>Excluir</button></li>
             ))}
+            {Object.keys(user).length === 0 && <p>Carregando...</p>}
           </ul>
           <form onSubmit={handleSubmit} className={styles[`${formClass}`]}>
             <div className={styles.formInputs}>
@@ -105,8 +110,8 @@ const Chats = () => {
             <div className={styles.formButtons}>
               {!loading && <button className={styles.createButton} type='submit'>Criar</button>}
               {loading && <button className={styles.createButton} disabled >Criar</button>}
-              {!loading && <button className={styles.deleteButton} type="button" onClick={closeForm}>Cancelar</button>}
-              {loading && <button className={styles.deleteButton} disabled >Cancelar</button>}
+              {!loading && <button className={styles.cancelButton} type="button" onClick={closeForm}>Cancelar</button>}
+              {loading && <button className={styles.cancelButton} disabled >Cancelar</button>}
             </div>
           </form>
         </div>

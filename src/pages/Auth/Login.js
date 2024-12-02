@@ -22,6 +22,7 @@ const Login = () => {
           registration,
           password,
       }
+      setResponse('Carregando...')
       resposta = await login(user)
       if(resposta.msgType === 'error'){
           setResponse(resposta.msgText)
