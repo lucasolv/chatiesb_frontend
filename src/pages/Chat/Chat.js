@@ -45,13 +45,7 @@ const Chat = () => {
               'Authorization': `Bearer ${JSON.parse(token)}`
           }
       }).then(async response => {
-        const data = await api.get(`ask/messages?threadId=${threadId}`, {
-            headers: {
-                'Authorization': `Bearer ${JSON.parse(token)}`
-            }
-        }).then(response => {
-            setMessages(response.data);
-          })
+          setMessages(response.data);
         })
       } catch (error) {
         console.log(error.message)
