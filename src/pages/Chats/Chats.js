@@ -11,9 +11,11 @@ const Chats = () => {
 
   const navigate = useNavigate();
   const {authenticated} = useContext(Context)
+  const [userThreads, setUserThreads] = useState([])
   const [user, setUser] = useState({})
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
+  const [loadingDeleteChat, setLoadingDeleteChat] = useState(false)
   const [formClass, setFormClass] = useState("displayNone")
   /* const [formClass, setFormClass] = useState("openForm") */
   const [conversationTitle, setConversationTitle] = useState("")
@@ -33,6 +35,20 @@ const Chats = () => {
     setUlClass("normal")
   }
 
+  const deleteChat = async (openAIThreadId) =>{
+    try {
+      setLoadingDeleteChat(true)
+      const data = await api.delete(`users/deleteChat/${openAIThreadId}`,{
+          headers: {
+              'Authorization': `Bearer ${JSON.parse(token)}`
+          }
+      })/* .then(async response => {
+        }) */
+    } catch (error) {
+      console.log(error.message)
+    }
+  }
+
   const handleSubmit = async (e)=>{
     e.preventDefault()
     setLoading(true)
@@ -50,7 +66,7 @@ const Chats = () => {
               'Authorization': `Bearer ${JSON.parse(token)}`
           }
       }).then(async response => {
-          navigate(`/chat/${JSON.parse(response.request.response).threadId}`)
+          navigate(`/chat/${user.registration}/${JSON.parse(response.request.response).threadId}`)
           setLoading(false)
         })
     } catch (error) {
@@ -70,12 +86,13 @@ const Chats = () => {
   useEffect(()=>{
     const fetchData = async () => {
       try {
-        const data = await api.get(`users/checkuser`, {
+        const data = await api.get(`users/chats`, {
             headers: {
                 'Authorization': `Bearer ${JSON.parse(token)}`
             }
         }).then(response => {
-            setUser(response.data);
+            setUserThreads(response.data.userThreads);
+            setUser(response.data.currentUser);
           })
           } catch (error) {
         setError(JSON.parse(error.request.response).message)
@@ -84,7 +101,26 @@ const Chats = () => {
     fetchData()
   },[])
 
-  if(Object.keys(user).length === 0){
+  useEffect(()=>{
+    const fetchData = async () => {
+      try {
+        const data = await api.get(`users/chats`, {
+            headers: {
+                'Authorization': `Bearer ${JSON.parse(token)}`
+            }
+        }).then(response => {
+            setUserThreads(response.data.userThreads);
+            setUser(response.data.currentUser);
+            setLoadingDeleteChat(false)
+          })
+          } catch (error) {
+        setError(JSON.parse(error.request.response).message)
+      }
+    } 
+    fetchData()
+  },[loadingDeleteChat])
+
+  if(Object.keys(userThreads).length === 0){
     return <p>Carregando...</p>
   }
 
@@ -95,10 +131,10 @@ const Chats = () => {
           <h2>Conversas</h2>
           <ul className={styles[`${ulClass}`]}>
             <li className={styles.addButton}><Link><button onClick={openForm}><MdOutlineAddCircle className={styles.addChat} /></button></Link></li>
-            {user.threadIds && user.threadIds.map((thread, i)=>(
-              <li className={styles.chatButton} key={i}><Link to={`/chat/${user.registration}/${i+1}`}><button>{thread.threadTitle}</button></Link> <button className={styles.deleteButton}>Excluir</button></li>
+            {userThreads && userThreads.map((thread, i)=>(
+              <li className={styles.chatButton} key={i}><Link to={`/chat/${user.registration}/${i+1}`}><button>{thread.threadTitle}</button></Link> {!loadingDeleteChat && <button className={styles.deleteButton} onClick={()=>{deleteChat(thread.openAIThreadId)}}>Excluir</button>} {loadingDeleteChat && <button disabled className={styles.loadingDeleteButton}>Aguarde...</button>}</li>
             ))}
-            {Object.keys(user).length === 0 && <p>Carregando...</p>}
+            {Object.keys(userThreads).length === 0 && <p>Carregando...</p>}
           </ul>
           <form onSubmit={handleSubmit} className={styles[`${formClass}`]}>
             <div className={styles.formInputs}>
