@@ -82,9 +82,9 @@ const Chat = () => {
   }, [mensagens]);
 
   useEffect(()=>{
-    /* if(!authenticated){
+    if(!authenticated){
       navigate('/login')
-    } */
+    }
       setMensagens(true)
   },[])
 

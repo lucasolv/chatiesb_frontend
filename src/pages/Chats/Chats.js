@@ -78,9 +78,9 @@ const Chats = () => {
   const [token] = useState(localStorage.getItem('token') || '')
 
   useEffect(()=>{
-    /* if(!authenticated){
+    if(!authenticated){
       navigate('/login')
-    } */
+    }
   },[])
 
   useEffect(()=>{
